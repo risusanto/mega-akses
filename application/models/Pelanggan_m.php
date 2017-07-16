@@ -9,6 +9,6 @@ class Pelanggan_m extends MY_Model
   function __construct()
   {
     $this->data['table_name'] = 'pelanggan';
-    $this->data['primary_key'] = 'username';
+    $this->data['primary_key'] = 'kd_pelanggan';
   }
 }
