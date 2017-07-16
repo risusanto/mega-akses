@@ -25,6 +25,9 @@ class Login extends MY_Controller
 				case 3:
 					redirect('pelanggan');
 					break;
+        case 4:
+  				redirect('direktur');
+  				break;
 			}
 			exit;
 		}

@@ -17,6 +17,9 @@ class MY_Controller extends CI_Controller
 		else if ($template == 'leader') {
 		return $this->load->view('leader/template/layout', $data);
 		}
+		else if ($template == 'direktur') {
+		return $this->load->view('direktur/template/layout', $data);
+		}
 		return $this->load->view('pelanggan/template/layout', $data);
 	}
 

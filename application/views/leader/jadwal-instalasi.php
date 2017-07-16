@@ -1,8 +1,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Permohonan
-                        <small>Anda dapat menambahkan, mengedit, dan menghapus data permohonan</small>
+                        Jadwal Instalasi
                     </h1>
                     <?= $this->session->flashdata('msg') ?>
                 </section>
@@ -13,7 +12,7 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Data Permohonan</h3>
+                                    <h3 class="box-title">Jadwal</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body table-responsive">
                                     <table id="example1" class="table table-bordered table-striped">

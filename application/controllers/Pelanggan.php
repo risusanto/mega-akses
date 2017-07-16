@@ -21,6 +21,12 @@ class Pelanggan extends MY_Controller
     $this->load->model('user_m');
     $this->load->model('pelanggan_m');
     $this->data['profile'] = $this->pelanggan_m->get_row(['email' => $this->data['username']]);
+    if ($this->data['profile']->status < 1) {
+      $this->session->unset_userdata('username');
+      $this->session->unset_userdata('id_role');
+      $this->flashmsg('Akun anda belum diaktivasi, mohon tunggu hingga proses survey dilakukan!', 'warning');
+      redirect('login');
+    }
   }
 
   public function index()

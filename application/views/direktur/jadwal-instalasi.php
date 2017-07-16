@@ -1,7 +1,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Jadwal Maintenance
+                        Jadwal Instalasi
                     </h1>
                     <?= $this->session->flashdata('msg') ?>
                 </section>
@@ -24,26 +24,25 @@
                                                 <th>Telepon</th>
                                                 <th>Brandwith</th>
                                                 <th>ISP</th>
+                                                <th>Teknisi</th>
                                                 <th>Jadwal</th>
-                                                <th>Opsi</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                           <?php foreach ($jadwal as $row): ?>
-                                            <?php if ($row->status_maintenance == 'dalam proses'): ?>
+                                            <?php $alamat = $this->pelanggan_m->get_row(['kd_pelanggan' => $row->kd_pelanggan])->alamat;?>
                                               <tr>
-                                                <td><?=$row->kd_maintenance?></td>
+                                                <td><?=$row->kd_instalasi?></td>
                                                 <td><?=$row->nama_pelanggan?></td>
-                                                <td><?=$row->alamat?></td>
+                                                <td><?=$alamat?></td>
                                                 <td><?=$row->no_telp?></td>
                                                 <td><?=$row->brandwith?></td>
                                                 <td><?=$row->isp?></td>
-                                                <td><?=$row->tgl_maintenance?></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-success" onclick="selesai(<?=$row->kd_maintenance?>)">Selesai</button>
-                                                </td>
+                                                <td><?=$row->nama_teknisi?></td>
+                                                <td><?=$row->tgl_instalasi?></td>
+                                                <td><?=$row->status_instalasi?></td>
                                               </tr>
-                                            <?php endif; ?>
                                           <?php endforeach; ?>
                                         </tbody>
                                         <tfoot>
@@ -54,8 +53,9 @@
                                               <th>Telepon</th>
                                               <th>Brandwith</th>
                                               <th>ISP</th>
+                                              <th>Teknisi</th>
                                               <th>Jadwal</th>
-                                              <th>Opsi</th>
+                                              <th>Status</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -70,7 +70,7 @@
                       function selesai(id) {
                           swal({
                           title: "Konfirmasi",
-                          text: "Maintenance telah selesai?",
+                          text: "Instalasi telah selesai?",
                           type: "info",
                           showCancelButton: true,
                           confirmButtonColor: "#DD6B55",
@@ -82,14 +82,14 @@
                           function(isConfirm){
                           if (isConfirm) {
                               $.ajax({
-                                  url: '<?= base_url('leader/jadwal-maintenance') ?>',
+                                  url: '<?= base_url('leader/jadwal-instalasi') ?>',
                                   type: 'POST',
                                   data: {
                                       selesai: true,
                                       id: id
                                   },
                                   success: function() {
-                                      window.location = '<?= base_url('leader/jadwal-maintenance') ?>';
+                                      window.location = '<?= base_url('leader/jadwal-instalasi') ?>';
                                   }
                               });
                           }

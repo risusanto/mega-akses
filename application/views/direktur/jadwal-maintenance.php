@@ -25,12 +25,11 @@
                                                 <th>Brandwith</th>
                                                 <th>ISP</th>
                                                 <th>Jadwal</th>
-                                                <th>Opsi</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                           <?php foreach ($jadwal as $row): ?>
-                                            <?php if ($row->status_maintenance == 'dalam proses'): ?>
                                               <tr>
                                                 <td><?=$row->kd_maintenance?></td>
                                                 <td><?=$row->nama_pelanggan?></td>
@@ -39,11 +38,8 @@
                                                 <td><?=$row->brandwith?></td>
                                                 <td><?=$row->isp?></td>
                                                 <td><?=$row->tgl_maintenance?></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-success" onclick="selesai(<?=$row->kd_maintenance?>)">Selesai</button>
-                                                </td>
+                                                <td><?=$row->status_maintenance?></td>
                                               </tr>
-                                            <?php endif; ?>
                                           <?php endforeach; ?>
                                         </tbody>
                                         <tfoot>
@@ -55,7 +51,7 @@
                                               <th>Brandwith</th>
                                               <th>ISP</th>
                                               <th>Jadwal</th>
-                                              <th>Opsi</th>
+                                              <th>Status</th>
                                             </tr>
                                         </tfoot>
                                     </table>
