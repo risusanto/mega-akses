@@ -30,7 +30,6 @@
                                         </thead>
                                         <tbody>
                                           <?php foreach ($jadwal as $row): ?>
-                                            <?php if ($row->status_maintenance == 'dalam proses'): ?>
                                               <tr>
                                                 <td><?=$row->kd_maintenance?></td>
                                                 <td><?=$row->nama_pelanggan?></td>
@@ -40,10 +39,13 @@
                                                 <td><?=$row->isp?></td>
                                                 <td><?=$row->tgl_maintenance?></td>
                                                 <td>
+                                                  <?php if ($row->status_maintenance == 'dalam proses'): ?>
                                                     <button type="button" class="btn btn-success" onclick="selesai(<?=$row->kd_maintenance?>)">Selesai</button>
+                                                    <?php else: ?>
+                                                      <?=$row->status_maintenance?>
+                                                  <?php endif; ?>
                                                 </td>
                                               </tr>
-                                            <?php endif; ?>
                                           <?php endforeach; ?>
                                         </tbody>
                                         <tfoot>

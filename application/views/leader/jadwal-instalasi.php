@@ -31,8 +31,7 @@
                                         </thead>
                                         <tbody>
                                           <?php foreach ($jadwal as $row): ?>
-                                            <?php $alamat = $this->pelanggan_m->get_row(['kd_pelanggan' => $row->kd_pelanggan])->alamat;
-                                             if ($row->status_instalasi == 'proses instalasi'): ?>
+                                            <?php $alamat = $this->pelanggan_m->get_row(['kd_pelanggan' => $row->kd_pelanggan])->alamat;?>
                                               <tr>
                                                 <td><?=$row->kd_instalasi?></td>
                                                 <td><?=$row->nama_pelanggan?></td>
@@ -43,10 +42,12 @@
                                                 <td><?=$row->nama_teknisi?></td>
                                                 <td><?=$row->tgl_instalasi?></td>
                                                 <td>
+                                                  <?php if ($row->status_instalasi == 'proses instalasi'): ?>
                                                     <button type="button" class="btn btn-success" onclick="selesai(<?=$row->kd_instalasi?>)">Selesai</button>
+                                                    <?=$row->status?>
+                                                  <?php endif; ?>
                                                 </td>
                                               </tr>
-                                            <?php endif; ?>
                                           <?php endforeach; ?>
                                         </tbody>
                                         <tfoot>
