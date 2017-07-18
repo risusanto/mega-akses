@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 16 Jul 2017 pada 17.15
+-- Generation Time: 18 Jul 2017 pada 02.37
 -- Versi Server: 5.7.17-log
 -- PHP Version: 7.0.17
 
@@ -29,10 +29,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `barang_keluar` (
   `kd_barangkeluar` bigint(20) NOT NULL,
   `tanggal_keluar` varchar(20) DEFAULT NULL,
-  `nama_barang` text,
   `keperluan` text,
-  `kd_pelanggan` bigint(20) DEFAULT NULL,
-  `stok` int(10) DEFAULT NULL
+  `jumlah` int(10) DEFAULT NULL,
+  `kd_barangmasuk` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -53,7 +52,7 @@ CREATE TABLE `barang_masuk` (
 --
 
 INSERT INTO `barang_masuk` (`kd_barangmasuk`, `tanggal_masuk`, `nama_barang`, `stok`) VALUES
-(1, '2017-07-10', 'Modem Huawei Z09', 4);
+(1, '2017-07-10', 'Modem Huawei Z09', 1);
 
 -- --------------------------------------------------------
 
@@ -143,7 +142,9 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`kd_pelanggan`, `nama_pelanggan`, `alamat`, `no_telp`, `email`, `brandwith`, `isp`, `status`) VALUES
-(3, 'Ari Susanto', 'kskaksaksasa', '08932323', 'risusanto@outlook.com', '4GB', 'MDP', 2);
+(3, 'Ari Susanto', 'kskaksaksasa', '08932323', 'risusanto@outlook.com', '4GB', 'MDP', 2),
+(4, 'Maria', 'sasasasasasasasa', '7676', 'ma@gmail.com', '67KB', 'MDP', 0),
+(5, 'dada', 'dadad', '2323', 'dadad@daad', 'sasasa', 'dadda', 0);
 
 -- --------------------------------------------------------
 
@@ -163,7 +164,9 @@ CREATE TABLE `permohonan` (
 --
 
 INSERT INTO `permohonan` (`kd_permohonan`, `pemohon`, `tgl_request`, `status`) VALUES
-(3, 3, '16/07/2017', 'disetujui');
+(3, 3, '16/07/2017', 'disetujui'),
+(4, 4, '16/07/2017', 'menunggu proses survey'),
+(5, 5, '18/07/2017', 'menunggu proses survey');
 
 -- --------------------------------------------------------
 
@@ -206,7 +209,9 @@ CREATE TABLE `survey` (
 --
 
 INSERT INTO `survey` (`kd_survey`, `pelanggan`, `jarak_spilter`, `keterangan`, `kd_permohonan`, `status`) VALUES
-(3, 3, '49 KM', 'Layak', 3, 'survey telah dilaksanakan');
+(3, 3, '49 KM', 'Layak', 3, 'survey telah dilaksanakan'),
+(4, 4, NULL, NULL, 4, NULL),
+(5, 5, NULL, NULL, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -248,8 +253,11 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`username`, `password`, `id_role`) VALUES
 ('admin', '21232f297a57a5a743894a0e4a801fc3', 1),
+('dadad@daad', 'e10adc3949ba59abbe56e057f20f883e', 3),
+('direktur', '4fbfd324f5ffcdff5dbf6f019b02eca8', 4),
 ('leader', 'c444858e0aaeb727da73d2eae62321ad', 2),
-('risusanto@outlook.com', 'e10adc3949ba59abbe56e057f20f883e', 3);
+('ma@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 3),
+('risusanto@outlook.com', '7f207a77ce16ce0b2cf9476cdfd9a451', 3);
 
 --
 -- Indexes for dumped tables
@@ -260,7 +268,7 @@ INSERT INTO `user` (`username`, `password`, `id_role`) VALUES
 --
 ALTER TABLE `barang_keluar`
   ADD PRIMARY KEY (`kd_barangkeluar`),
-  ADD KEY `pelanggan_fk` (`kd_pelanggan`);
+  ADD KEY `fk_kdbarangmasuk` (`kd_barangmasuk`);
 
 --
 -- Indexes for table `barang_masuk`
@@ -339,17 +347,17 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
-  MODIFY `kd_barangkeluar` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `kd_barangkeluar` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
-  MODIFY `kd_barangmasuk` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `kd_barangmasuk` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `gangguan`
 --
 ALTER TABLE `gangguan`
-  MODIFY `kd_gangguan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `kd_gangguan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `instalasi`
 --
@@ -364,12 +372,12 @@ ALTER TABLE `maintenance`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `kd_pelanggan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `kd_pelanggan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `permohonan`
 --
 ALTER TABLE `permohonan`
-  MODIFY `kd_permohonan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `kd_permohonan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `role`
 --
@@ -379,12 +387,12 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `kd_survey` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `kd_survey` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
-  MODIFY `kd_teknisi` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `kd_teknisi` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
@@ -393,7 +401,7 @@ ALTER TABLE `teknisi`
 -- Ketidakleluasaan untuk tabel `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
-  ADD CONSTRAINT `pelanggan_fk` FOREIGN KEY (`kd_pelanggan`) REFERENCES `pelanggan` (`kd_pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_kdbarangmasuk` FOREIGN KEY (`kd_barangmasuk`) REFERENCES `barang_masuk` (`kd_barangmasuk`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `gangguan`
