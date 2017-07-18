@@ -23,6 +23,34 @@ class Leader extends MY_Controller
 
   public function index()
   {
+    if ($this->POST('ganti_passwd')) {
+        $this->load->model('user_m');
+        $req = ['password','new_password','confirm'];
+        if (!$this->user_m->required_input($req)) {
+          $this->flashmsg('Data harus lengkap!');
+          redirect('leader');
+          exit;
+        }
+        $data = [
+          'username' => $this->data['username'],
+          'password' => md5($this->POST('password'))
+        ];
+        $cek = $this->user_m->get_row($data);
+        if (!isset($cek)) {
+          $this->flashmsg('Password salah!','danger');
+          redirect('leader');
+          exit;
+        }
+        if ($this->POST('new_password') != $this->POST('confirm')) {
+          $this->flashmsg('Password harus sama!','danger');
+          redirect('leader');
+          exit;
+        }
+        $this->user_m->update($this->data['username'],['password' => md5($this->POST('new_password'))]);
+        $this->flashmsg('Password diganti');
+        redirect('leader');
+        exit;
+      }
     $this->data['title'] = 'Dashboard'.$this->title;
     $this->data['content'] = 'leader/dashboard';
 
@@ -200,8 +228,49 @@ class Leader extends MY_Controller
   public function barang_keluar()
   {
     $this->load->model('barang_keluar_m');
+    $this->load->model('barang_masuk_m');
 
-    $this->data['barang'] = $this->barang_keluar_m->get();
+    if ($this->POST('add')) {
+      $req = ['barang','tanggal','jumlah','keperluan'];
+      if (!$this->barang_keluar_m->required_input($req)) {
+        $this->flashmsg('Data harus lengkap!','warning');
+        redirect('leader/barang-keluar');
+        exit;
+      }
+      $data = [
+        'kd_barangmasuk' => $this->POST('barang'),
+        'tanggal_keluar' => $this->POST('tanggal'),
+        'keperluan' => $this->POST('keperluan'),
+        'jumlah' => $this->POST('jumlah')
+      ];
+      $stok = $this->barang_masuk_m->get_row(['kd_barangmasuk' => $this->POST('barang')])->stok;
+      $jml = $this->POST('jumlah');
+      $sisa = [
+        'stok' => $stok - $jml
+      ];
+      if ($jml > $stok) {
+        $this->flashmsg('Stok tidak mencukupi','warning');
+        redirect('leader/barang-keluar');
+        exit;
+      }
+      $this->barang_masuk_m->update($this->POST('barang'),$sisa);
+      $this->barang_keluar_m->insert($data);
+      $this->flashmsg('Data disimpan!');
+      redirect('leader/barang-keluar');
+      exit;
+    }
+
+    if ($this->POST('delete')) {
+      $jml = $this->barang_keluar_m->get_row(['kd_barangkeluar' => $this->POST('id')]);
+      $stok = $this->barang_masuk_m->get_row(['kd_barangmasuk' => $jml->kd_barangmasuk])->stok;
+      $this->barang_masuk_m->update($jml->kd_barangmasuk,['stok' => $stok + $jml->jumlah]);
+      $this->barang_keluar_m->delete($this->POST('id'));
+      exit;
+    }
+
+    $tables = ['barang_masuk']; $jcond = ['kd_barangmasuk'];
+    $this->data['barang_masuk'] = $this->barang_masuk_m->get('stok > 0');
+    $this->data['barang'] = $this->barang_keluar_m->getDataJoin($tables,$jcond);
     $this->data['title'] = 'Barang Keluar'.$this->title;
     $this->data['content'] = 'leader/barang-keluar';
 

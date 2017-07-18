@@ -57,5 +57,42 @@
         </section>
         <!-- /.sidebar -->
     </aside>
+
+    <div class="modal fade" id="ganti" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Ubah Password</h4>
+            </div>
+            <?=form_open('leader/index')?>
+            <div class="modal-body">
+                  <div class="box-body">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password Lama</label>
+                    <input type="password" name="password" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password Baru</label>
+                    <input type="password" name="new_password" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Konfirmasi Password Baru</label>
+                    <input type="password" name="confirm" class="form-control">
+                  </div>
+                  </div>
+                  <!-- /.box-body -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+              <input type="submit" name ="ganti_passwd" class="btn btn-primary" value="Simpan">
+            <?=form_close()?>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+  </div>
     <!-- Right side column. Contains the navbar and content of the page -->
     <aside class="right-side">

@@ -31,6 +31,34 @@ class Pelanggan extends MY_Controller
 
   public function index()
   {
+    if ($this->POST('ganti_passwd')) {
+        $this->load->model('user_m');
+        $req = ['password','new_password','confirm'];
+        if (!$this->user_m->required_input($req)) {
+          $this->flashmsg('Data harus lengkap!');
+          redirect('pelanggan');
+          exit;
+        }
+        $data = [
+          'username' => $this->data['username'],
+          'password' => md5($this->POST('password'))
+        ];
+        $cek = $this->user_m->get_row($data);
+        if (!isset($cek)) {
+          $this->flashmsg('Password salah!','danger');
+          redirect('pelanggan');
+          exit;
+        }
+        if ($this->POST('new_password') != $this->POST('confirm')) {
+          $this->flashmsg('Password harus sama!','danger');
+          redirect('pelanggan');
+          exit;
+        }
+        $this->user_m->update($this->data['username'],['password' => md5($this->POST('new_password'))]);
+        $this->flashmsg('Password diganti');
+        redirect('pelanggan');
+        exit;
+      }
     $this->data['title'] = 'Dashboard'.$this->title;
     $this->data['content'] = 'pelanggan/dashboard';
 

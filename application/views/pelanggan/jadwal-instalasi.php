@@ -30,7 +30,7 @@
                                         </thead>
                                         <tbody>
                                           <?php foreach ($jadwal as $row): ?>
-                                            <?php if ($row->status_instalasi != 'selesai' && $profile->kd_pelanggan == $row->kd_pelanggan): ?>
+                                            <?php if ($profile->kd_pelanggan == $row->kd_pelanggan): ?>
                                               <tr>
                                                 <td><?=$row->kd_instalasi?></td>
                                                 <td><?=$row->brandwith?></td>

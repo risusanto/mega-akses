@@ -44,7 +44,8 @@
                                                 <td>
                                                   <?php if ($row->status_instalasi == 'proses instalasi'): ?>
                                                     <button type="button" class="btn btn-success" onclick="selesai(<?=$row->kd_instalasi?>)">Selesai</button>
-                                                    <?=$row->status?>
+                                                    <?php else: ?>
+                                                    <?=$row->status_instalasi?>
                                                   <?php endif; ?>
                                                 </td>
                                               </tr>

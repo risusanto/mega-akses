@@ -4,6 +4,7 @@
                         Laman Awal
                         <small>Selamat Datang</small>
                     </h1>
+                    <?= $this->session->flashdata('msg') ?>
                 </section>
 
                 <!-- Main content -->

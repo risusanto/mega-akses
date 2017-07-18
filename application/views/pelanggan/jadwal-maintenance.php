@@ -13,7 +13,7 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Data Permohonan</h3>
+                                    <h3 class="box-title">Jadwal</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body table-responsive">
                                     <table id="example1" class="table table-bordered table-striped">
@@ -28,7 +28,7 @@
                                         </thead>
                                         <tbody>
                                           <?php foreach ($jadwal as $row): ?>
-                                            <?php if ($row->status_maintenance == 'dalam proses' && $row->kd_pelanggan == $profile->kd_pelanggan): ?>
+                                            <?php if ($row->kd_pelanggan == $profile->kd_pelanggan): ?>
                                               <tr>
                                                 <td><?=$row->kd_maintenance?></td>
                                                 <td><?=$row->brandwith?></td>

@@ -25,7 +25,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a data-toggle="modal" data-target="#ganti" class="btn btn-default btn-flat">Ganti Password</a>
                             </div>
                             <div class="pull-right">
                                 <a href="<?=base_url('logout')?>" class="btn btn-default btn-flat">Sign out</a>

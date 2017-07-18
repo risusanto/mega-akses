@@ -30,8 +30,8 @@
                                         </thead>
                                         <tbody>
                                           <?php foreach ($pelanggan as $row): ?>
-                                            <?php $cek = $this->instalasi_m->get_row(['kd_pelanggan' => $row->kd_pelanggan]);
-                                            if ($row->status == 1 && !isset($cek) ): ?>
+                                            <?php $cek = $this->instalasi_m->get_row(['kd_pelanggan' => $row->kd_pelanggan]);?>
+
                                             <tr>
                                               <td><?=$row->kd_pelanggan?></td>
                                               <td><?=$row->nama_pelanggan?></td>
@@ -40,10 +40,14 @@
                                               <td><?=$row->brandwith?></td>
                                               <td><?=$row->isp?></td>
                                               <td>
-                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#atur" onclick="atur_jadwal(<?=$row->kd_pelanggan?>)">Atur Jadwal</button>
+                                                <?php if (!isset($cek)): ?>
+                                                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#atur" onclick="atur_jadwal(<?=$row->kd_pelanggan?>)">Atur Jadwal</button>
+                                                  <?php else: ?>
+                                                  Selesai
+                                                <?php endif; ?>
                                               </td>
                                             </tr>
-                                            <?php endif; ?>
+
                                           <?php endforeach; ?>
                                         </tbody>
                                         <tfoot>
