@@ -37,6 +37,17 @@
                         <li><a href="<?=base_url('direktur/jadwal-maintenance')?>"><i class="fa fa-angle-double-right"></i> Maintenance</a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-print"></i>
+                        <span>Cetak Jadwal</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?=base_url('direktur/print-jadwal-instalasi')?>"><i class="fa fa-angle-double-right" target="_blank"></i> Instalasi</a></li>
+                        <li><a href="<?=base_url('direktur/print-jadwal-maintenance')?>"><i class="fa fa-angle-double-right" target="_blank"></i> Maintenance</a></li>
+                    </ul>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->

@@ -64,4 +64,27 @@ class Direktur extends MY_Controller
 
     $this->template($this->data,'direktur');
   }
+
+  public function print_jadwal_instalasi()
+  {
+    $this->load->model('instalasi_m');
+    $this->load->model('pelanggan_m');
+
+    $tables = ['pelanggan','teknisi']; $jcond = ['kd_pelanggan','kd_teknisi'];
+    $this->data['jadwal'] = $this->instalasi_m->getDataJoin($tables,$jcond);
+    $this->data['title'] = 'Jadwal Instalasi'.$this->title;
+
+    $this->load->view('direktur/print-instalasi', $this->data);
+  }
+
+  public function print_jadwal_maintenance()
+  {
+    $this->load->model('maintenance_m');
+
+    $tables = ['pelanggan']; $jcond = ['kd_pelanggan'];
+    $this->data['jadwal'] = $this->maintenance_m->getDataJoin($tables,$jcond);
+    $this->data['title'] = 'Jadwal Maintenance'.$this->title;
+
+    $this->load->view('direktur/print-maintenance', $this->data);
+  }
 }

@@ -2,7 +2,7 @@
 
 class MY_Controller extends CI_Controller
 {
-	public $title = ' | PT Mega Akses Perkasa';
+	public $title = ' | PT Mega Akses Persada';
 
 	public function __construct()
 	{

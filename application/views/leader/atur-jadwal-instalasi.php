@@ -31,7 +31,7 @@
                                         <tbody>
                                           <?php foreach ($pelanggan as $row): ?>
                                             <?php $cek = $this->instalasi_m->get_row(['kd_pelanggan' => $row->kd_pelanggan]);?>
-
+                                            <?php if ($row->status == 1 || $row->status == 2): ?>
                                             <tr>
                                               <td><?=$row->kd_pelanggan?></td>
                                               <td><?=$row->nama_pelanggan?></td>
@@ -47,7 +47,7 @@
                                                 <?php endif; ?>
                                               </td>
                                             </tr>
-
+                                            <?php endif; ?>
                                           <?php endforeach; ?>
                                         </tbody>
                                         <tfoot>
