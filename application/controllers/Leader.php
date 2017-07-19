@@ -149,6 +149,19 @@ class Leader extends MY_Controller
     $this->load->model('instalasi_m');
     $this->load->model('pelanggan_m');
 
+    if ($this->POST('get') && $this->POST('id')) {
+				$data = $this->instalasi_m->get_row(['kd_instalasi' => $this->POST('id')]);
+				echo json_encode($data);
+				exit;
+		}
+
+    if ($this->POST('atur')) {
+      $this->instalasi_m->update($this->POST('kd_instalasi'),['tgl_instalasi' => $this->POST('tgl_instalasi')]);
+      $this->flashmsg('Data disimpan!');
+      redirect('leader/jadwal-instalasi');
+      exit;
+    }
+
     if ($this->POST('selesai') && $this->POST('id')) {
       $data = ['status_instalasi' => 'selesai' ];
       $user = ['status' => 2];
@@ -171,6 +184,7 @@ class Leader extends MY_Controller
     $this->load->model('gangguan_m');
     $this->load->model('pelanggan_m');
     $this->load->model('maintenance_m');
+    $this->load->model('teknisi_m');
 
     if ($this->POST('get') && $this->POST('id')) {
 				$data = $this->gangguan_m->get_row(['kd_gangguan' => $this->POST('id')]);
@@ -179,7 +193,7 @@ class Leader extends MY_Controller
 		}
 
     if ($this->POST('atur_maintenance')) {
-      $req = ['tgl_maintenance'];
+      $req = ['tgl_maintenance','teknisi'];
       if (!$this->maintenance_m->required_input($req)) {
         $this->flashmsg('Data harus lengkap!','warning');
         redirect('leader/atur-jadwal-maintenance');
@@ -187,7 +201,8 @@ class Leader extends MY_Controller
       }
       $data = [
         'tgl_maintenance' => $this->POST('tgl_maintenance'),
-        'kd_pelanggan' => $this->POST('kd_pelanggan')
+        'kd_pelanggan' => $this->POST('kd_pelanggan'),
+        'kd_teknisi' => $this->POST('teknisi')
       ];
       $this->maintenance_m->insert($data);
       $this->gangguan_m->update($this->POST('kd_gangguan'),['status' => '1']);
@@ -196,6 +211,7 @@ class Leader extends MY_Controller
       exit;
     }
 
+    $this->data['teknisi'] = $this->teknisi_m->get();
     $tables = ['pelanggan']; $jcond = ['kd_pelanggan'];
     $this->data['gangguan'] = $this->gangguan_m->getDataJoin($tables,$jcond);
     $this->data['title'] = 'Atur Jadwal Maintenance'.$this->title;
@@ -207,6 +223,20 @@ class Leader extends MY_Controller
   public function jadwal_maintenance()
   {
     $this->load->model('maintenance_m');
+    $this->load->model('teknisi_m');
+
+    if ($this->POST('get') && $this->POST('id')) {
+				$data = $this->maintenance_m->get_row(['kd_maintenance' => $this->POST('id')]);
+				echo json_encode($data);
+				exit;
+		}
+
+    if ($this->POST('atur')) {
+      $this->maintenance_m->update($this->POST('kd_maintenance'),['tgl_maintenance' => $this->POST('tgl_maintenance')]);
+      $this->flashmsg('Data disimpan!');
+      redirect('leader/jadwal-maintenance');
+      exit;
+    }
 
     if ($this->POST('selesai') && $this->POST('id')) {
       $data = [

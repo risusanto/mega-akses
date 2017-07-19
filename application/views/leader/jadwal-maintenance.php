@@ -25,6 +25,7 @@
                                                 <th>Brandwith</th>
                                                 <th>ISP</th>
                                                 <th>Jadwal</th>
+                                                <th>Teknisi</th>
                                                 <th>Opsi</th>
                                             </tr>
                                         </thead>
@@ -38,9 +39,11 @@
                                                 <td><?=$row->brandwith?></td>
                                                 <td><?=$row->isp?></td>
                                                 <td><?=$row->tgl_maintenance?></td>
+                                                <td><?=$this->teknisi_m->get_row(['kd_teknisi' => $row->kd_teknisi])->nama_teknisi?></td>
                                                 <td>
                                                   <?php if ($row->status_maintenance == 'dalam proses'): ?>
-                                                    <button type="button" class="btn btn-success" onclick="selesai(<?=$row->kd_maintenance?>)">Selesai</button>
+                                                    <button type="button" class="btn btn-primary" onclick="selesai(<?=$row->kd_maintenance?>)">Selesai</button>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#atur" onclick="atur_jadwal(<?=$row->kd_maintenance?>)">Ganti Jadwal</button>
                                                     <?php else: ?>
                                                       <?=$row->status_maintenance?>
                                                   <?php endif; ?>
@@ -57,6 +60,7 @@
                                               <th>Brandwith</th>
                                               <th>ISP</th>
                                               <th>Jadwal</th>
+                                              <th>Teknisi</th>
                                               <th>Opsi</th>
                                             </tr>
                                         </tfoot>
@@ -67,7 +71,53 @@
                     </div>
                 </section><!-- /.content -->
 
+                <div class="modal fade" id="atur" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">Atur Jadwal</h4>
+                        </div>
+                        <?=form_open('leader/jadwal-maintenance')?>
+                        <div class="modal-body">
+                              <div class="box-body">
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Tanggal Maintenance</label>
+                                <input type="date" name="tgl_maintenance" id="tgl" class="form-control">
+                              </div>
+                              <input type="hidden" name="kd_maintenance" id="id" value="">
+                              </div>
+                              <!-- /.box-body -->
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+                          <input type="submit" name ="atur" class="btn btn-primary" value="Simpan">
+                        <?=form_close()?>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+              </div>
+
               <script type="text/javascript">
+
+                        function atur_jadwal(id) {
+                            $.ajax({
+                                url: '<?= base_url('leader/jadwal-maintenance') ?>',
+                                type: 'POST',
+                                data: {
+                                    id: id,
+                                    get: true
+                                },
+                                success: function(response) {
+                                    response = JSON.parse(response);
+                                    $('#id').val(response.kd_maintenance);
+                                    $('#tgl').val(response.tgl_maintenance);
+                                }
+                            });
+                        }
 
                       function selesai(id) {
                           swal({

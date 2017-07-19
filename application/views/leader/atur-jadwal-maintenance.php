@@ -75,6 +75,15 @@
                               <label for="exampleInputPassword1">Tanggal Instalasi</label>
                               <input type="date" name="tgl_maintenance" class="form-control">
                             </div>
+                            <div class="form-group">
+                              <label>Teknisi</label>
+                              <select name="teknisi" class="form-control">
+                                <?php foreach ($teknisi as $row): ?>
+                                    <option value="">- Pilih Teknisi -</option>
+                                    <option value="<?=$row->kd_teknisi?>"><?=$row->nama_teknisi?></option>
+                                <?php endforeach; ?>
+                              </select>
+                            </div>
                             <input type="hidden" name="kd_pelanggan" id="id" value="">
                             <input type="hidden" name="kd_gangguan" id='kd' value="">
                             </div>

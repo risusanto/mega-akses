@@ -43,7 +43,8 @@
                                                 <td><?=$row->tgl_instalasi?></td>
                                                 <td>
                                                   <?php if ($row->status_instalasi == 'proses instalasi'): ?>
-                                                    <button type="button" class="btn btn-success" onclick="selesai(<?=$row->kd_instalasi?>)">Selesai</button>
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#atur" onclick="atur_jadwal(<?=$row->kd_instalasi?>)">Ganti Jadwal</button>
+                                                    <button type="button" class="btn btn-primary" onclick="selesai(<?=$row->kd_instalasi?>)">Selesai</button>
                                                     <?php else: ?>
                                                     <?=$row->status_instalasi?>
                                                   <?php endif; ?>
@@ -71,7 +72,53 @@
                     </div>
                 </section><!-- /.content -->
 
+                <div class="modal fade" id="atur" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">Atur Jadwal</h4>
+                        </div>
+                        <?=form_open('leader/jadwal-instalasi')?>
+                        <div class="modal-body">
+                              <div class="box-body">
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Tanggal Instalasi</label>
+                                <input type="date" name="tgl_instalasi" id="tgl" class="form-control">
+                              </div>
+                              <input type="hidden" name="kd_instalasi" id="id" value="">
+                              </div>
+                              <!-- /.box-body -->
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+                          <input type="submit" name ="atur" class="btn btn-primary" value="Simpan">
+                        <?=form_close()?>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+              </div>
+
               <script type="text/javascript">
+
+                        function atur_jadwal(id) {
+                            $.ajax({
+                                url: '<?= base_url('leader/jadwal-instalasi') ?>',
+                                type: 'POST',
+                                data: {
+                                    id: id,
+                                    get: true
+                                },
+                                success: function(response) {
+                                    response = JSON.parse(response);
+                                    $('#id').val(response.kd_instalasi);
+                                    $('#tgl').val(response.tgl_instalasi);
+                                }
+                            });
+                        }
 
                       function selesai(id) {
                           swal({
