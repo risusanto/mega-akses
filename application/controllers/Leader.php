@@ -23,6 +23,12 @@ class Leader extends MY_Controller
 
   public function index()
   {
+    $this->load->model('permohonan_m');
+    $this->load->model('instalasi_m');
+    $this->load->model('pelanggan_m');
+    $this->load->model('gangguan_m');
+    $this->data['langgan'] = $this->pelanggan_m->get(['status' => 1]);
+
     if ($this->POST('ganti_passwd')) {
         $this->load->model('user_m');
         $req = ['password','new_password','confirm'];

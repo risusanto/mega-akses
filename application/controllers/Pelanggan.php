@@ -31,6 +31,9 @@ class Pelanggan extends MY_Controller
 
   public function index()
   {
+    $this->load->model('instalasi_m');
+    $this->load->model('maintenance_m');
+    
     if ($this->POST('ganti_passwd')) {
         $this->load->model('user_m');
         $req = ['password','new_password','confirm'];

@@ -24,6 +24,7 @@ class Admin extends MY_Controller
 
   public function index()
   {
+    $this->load->model('permohonan_m');
     $this->data['title'] = 'Dashboard'.$this->title;
     $this->data['content'] = 'admin/dashboard';
 
@@ -64,6 +65,12 @@ class Admin extends MY_Controller
     if ($this->POST('delete')) {
       $username = $this->pelanggan_m->get_row(['kd_pelanggan' => $this->POST('id')])->email;
       $this->user_m->delete($username);
+      exit;
+    }
+
+    if ($this->POST('resetpw')) {
+      $username = $this->pelanggan_m->get_row(['kd_pelanggan' => $this->POST('id')])->email;
+      $this->user_m->update($username,['password' => md5('123456')]);
       exit;
     }
 

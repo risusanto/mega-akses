@@ -42,6 +42,7 @@
                                                 <td>
                                                   <button type="button" class="btn btn-primary fa fa-edit" data-toggle="modal" data-target="#edit" onclick="get(<?=$row->kd_pelanggan?>)"></button>
                                                   <button type="button" class="btn btn-danger fa fa-trash-o" onclick="deleteData(<?=$row->kd_pelanggan?>)"></button>
+                                                  <button type="button" class="btn btn-success" onclick="reset(<?=$row->kd_pelanggan?>)">Reset Password</button>
                                                 </td>
                                             </tr>
                                           <?php endforeach; ?>
@@ -157,6 +158,35 @@
                                     type: 'POST',
                                     data: {
                                         delete: true,
+                                        id: id
+                                    },
+                                    success: function() {
+                                        window.location = '<?= base_url('admin/data-pelanggan') ?>';
+                                    }
+                                });
+                            }
+                            });
+                        }
+
+                        function reset(id) {
+                            swal({
+                            title: "Reset Password?",
+                            text: "Password akan kembali ke default yaitu '123456'",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Ya",
+                            cancelButtonText: "Tidak",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                            },
+                            function(isConfirm){
+                            if (isConfirm) {
+                                $.ajax({
+                                    url: '<?= base_url('admin/data-pelanggan') ?>',
+                                    type: 'POST',
+                                    data: {
+                                        resetpw: true,
                                         id: id
                                     },
                                     success: function() {
