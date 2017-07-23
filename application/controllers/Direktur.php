@@ -74,7 +74,7 @@ class Direktur extends MY_Controller
     $this->data['jadwal'] = $this->instalasi_m->getDataJoin($tables,$jcond);
     $this->data['title'] = 'Jadwal Instalasi'.$this->title;
 
-    $this->load->view('direktur/print-instalasi', $this->data);
+    $this->load->view('laporan/instalasi', $this->data);
   }
 
   public function print_jadwal_maintenance()
@@ -85,6 +85,6 @@ class Direktur extends MY_Controller
     $this->data['jadwal'] = $this->maintenance_m->getDataJoin($tables,$jcond);
     $this->data['title'] = 'Jadwal Maintenance'.$this->title;
 
-    $this->load->view('direktur/print-maintenance', $this->data);
+    $this->load->view('laporan/maintenance', $this->data);
   }
 }
