@@ -27,6 +27,12 @@ class Pelanggan extends MY_Controller
       $this->flashmsg('Akun anda belum diaktivasi, mohon tunggu hingga proses survey dilakukan!', 'warning');
       redirect('login');
     }
+    if ($this->data['profile']->status == 9) {
+      $this->session->unset_userdata('username');
+      $this->session->unset_userdata('id_role');
+      $this->flashmsg('Permohonan anda sudah ditolak!', 'warning');
+      redirect('login');
+    }
   }
 
   public function index()

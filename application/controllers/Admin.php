@@ -137,6 +137,14 @@ class Admin extends MY_Controller
         'alamat' => $this->POST('alamat'),
         'telp' => $this->POST('telepon')
       ];
+      
+      $data_user = [
+        'username' => $this->POST('nama'),
+        'password' => md5('123456'),
+        'id_role' => 5
+      ];
+      
+      $this->user_m->insert($data_user);
       $this->teknisi_m->insert($data_teknisi);
       $this->flashmsg('Data berhasil disimpan!');
       redirect('admin/data-teknisi');
@@ -157,8 +165,8 @@ class Admin extends MY_Controller
     $this->load->model('pelanggan_m');
 
     if ($this->POST('tolak')) {
-      $username = $this->pelanggan_m->get_row(['kd_pelanggan' => $this->POST('id')])->email;
-      $this->user_m->delete($username);
+      $this->pelanggan_m->update($this->POST('id'), ['status' => 9]);
+      $this->permohonan_m->update_where(['pemohon' => $this->POST('id')],['status' => 'ditolak']);
       exit;
     }
 

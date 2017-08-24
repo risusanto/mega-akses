@@ -78,8 +78,8 @@
                             <div class="form-group">
                               <label>Teknisi</label>
                               <select name="teknisi" class="form-control">
-                                <?php foreach ($teknisi as $row): ?>
                                     <option value="">- Pilih Teknisi -</option>
+                                <?php foreach ($teknisi as $row): ?>
                                     <option value="<?=$row->kd_teknisi?>"><?=$row->nama_teknisi?></option>
                                 <?php endforeach; ?>
                               </select>

@@ -30,6 +30,7 @@
                                         <tbody>
                                           <?php foreach ($permohonan as $row): ?>
                                             <?php if ($row->status != 'disetujui'): ?>
+                                            <?php if ($row->status != 'ditolak'): ?>
                                               <?php $pelanggan = $this->pelanggan_m->get_row(['kd_pelanggan' => $row->pemohon]) ?>
                                             <tr>
                                                 <td><?=$row->kd_permohonan?></td>
@@ -46,6 +47,7 @@
                                                   <button type="button" class="btn btn-danger" onclick="tolak(<?=$row->pemohon?>)">Tolak</button>
                                                 </td>
                                             </tr>
+                                            <?php endif; ?>
                                             <?php endif; ?>
                                           <?php endforeach; ?>
                                         </tbody>
